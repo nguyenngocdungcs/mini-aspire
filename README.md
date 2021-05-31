@@ -4,7 +4,10 @@ Install packages
 ```
 composer install
 ```
-
+Create .env file from .env.example 
+```
+cp .env.example .env
+```
 Create database for the project (Postgres). Then add config in .env file. For example:
 ```
 DB_CONNECTION=pgsql
