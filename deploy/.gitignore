@@ -1,0 +1,8 @@
+*
+!.gitignore
+!deploy.sh.example
+!exclude.deploy.txt
+!copy.sh
+!exclude.copy.txt
+!setup.sh.example
+!exclude.setup.txt

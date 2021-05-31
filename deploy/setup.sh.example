@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+SERVER="username@server_ip"
+SOURCE_FOLDER_NAME="this-source-name"
+DEPLOY_PATH="/var/www/$SOURCE_FOLDER_NAME"
+
+FILE_NAME="$SOURCE_FOLDER_NAME.tar.gz"
+
+rm -rf $FILE_NAME
+php artisan cache:clear
+php artisan view:clear
+php artisan debugbar:clear
+php artisan config:clear
+php artisan route:clear
+
+cd ..
+tar -zcv -X $SOURCE_FOLDER_NAME/deploy/exclude.setup.txt -f $FILE_NAME $SOURCE_FOLDER_NAME
+echo "=================================="
+echo "Upload source..."
+scp $FILE_NAME $SERVER:~
+echo "=================================="
+echo "Deploying..."
+
+SCRIPT="cd ~"
+SCRIPT="$SCRIPT && tar -xzvf $FILE_NAME"
+SCRIPT="$SCRIPT && mkdir $DEPLOY_PATH"
+SCRIPT="$SCRIPT && command cp -rf $SOURCE_FOLDER_NAME/. $DEPLOY_PATH"
+SCRIPT="$SCRIPT && rm $FILE_NAME && rm -rf $SOURCE_FOLDER_NAME"
+SCRIPT="$SCRIPT && cd $DEPLOY_PATH && composer install && php artisan key:generate"
+SCRIPT="$SCRIPT && chown -R www-data:www-data $DEPLOY_PATH"
+ssh $SERVER "$SCRIPT"
+
+echo "=================================="
+rm -rf $FILE_NAME
+echo "Done"

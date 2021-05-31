@@ -1,0 +1,10 @@
+.idea
+.git*
+storage
+public/AdminLTE
+tests
+vendor
+.env*
+deploy
+._.DS_Store
+.DS_Store

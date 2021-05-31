@@ -1,0 +1,7 @@
+.idea
+.git
+vendor
+debugbar
+copy.sh
+exclude.copy.txt
+*.log

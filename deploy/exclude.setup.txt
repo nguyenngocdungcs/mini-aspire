@@ -1,0 +1,8 @@
+.idea
+.git*
+tests
+vendor
+deploy
+storage/logs/laravel*
+._.DS_Store
+.DS_Store
